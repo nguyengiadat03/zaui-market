@@ -33,15 +33,16 @@ export default function ProductItem(props: ProductItemProps) {
           <>
             <img
               src={props.product.image}
-              className="w-full aspect-square object-cover rounded-lg"
+              className="w-full max-w-[120px] aspect-square object-contain mx-auto rounded-lg"
               style={{
                 viewTransitionName:
-                  isTransitioning && selected // only animate the "clicked" product item in related products list
+                  isTransitioning && selected
                     ? `product-image-${props.product.id}`
                     : undefined,
               }}
               alt={props.product.name}
             />
+
             <div className="pt-2 pb-1.5">
               <div className="pt-1 pb-0.5">
                 <div className="text-xs h-9 line-clamp-2">

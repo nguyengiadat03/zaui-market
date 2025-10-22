@@ -9,10 +9,10 @@
       {
         "product": {
           "id": 1,
-          "name": "Táo giòn nhập khẩu - 1kg",
+          "name": "Tên miền quốc gia .vn",
           "price": 67900,
           "originalPrice": 69900,
-          "image": "https://zalo-miniapp.github.io/zaui-market/dummy/product/apples.png",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/1/14/Logo_of_dotVN_domain.svg",
           "category": {
             "id": 1,
             "name": "Fruits",
@@ -25,10 +25,10 @@
       {
         "product": {
           "id": 2,
-          "name": "Cải ngọt thủy canh 300g",
+          "name": "GPT Plus Business",
           "price": 27900,
           "originalPrice": 30000,
-          "image": "https://zalo-miniapp.github.io/zaui-market/dummy/product/cabbage.png",
+          "image": "https://skmini.com/cdn/shop/files/IMG-20250818-WA0017.jpg?v=1756722933",
           "category": {
             "id": 1,
             "name": "Vegetables",
@@ -41,10 +41,10 @@
       {
         "product": {
           "id": 3,
-          "name": "Kem hộp Socola",
+          "name": "n8n Host Pro",
           "price": 313000,
           "originalPrice": 500000,
-          "image": "https://zalo-miniapp.github.io/zaui-market/dummy/product/creamy.png",
+          "image": "https://n8nhost.io/wp-content/uploads/2025/04/2.png",
           "category": {
             "id": 1,
             "name": "Desserts",
@@ -75,10 +75,10 @@
       {
         "product": {
           "id": 2,
-          "name": "Cải ngọt thủy canh 300g",
+          "name": "CapCut Pro (Team)",
           "price": 27900,
           "originalPrice": 30000,
-          "image": "https://zalo-miniapp.github.io/zaui-market/dummy/product/cabbage.png",
+          "image": "https://zilatech.vn/wp-content/uploads/2021/10/Pro.png",
           "category": {
             "id": 1,
             "name": "Vegetables",
@@ -91,10 +91,10 @@
       {
         "product": {
           "id": 3,
-          "name": "Kem hộp Socola",
+          "name": "Tên miền .net",
           "price": 313000,
           "originalPrice": 500000,
-          "image": "https://zalo-miniapp.github.io/zaui-market/dummy/product/creamy.png",
+          "image": "https://www.pavietnam.vn/images/dangky/icon_net.svg",
           "category": {
             "id": 1,
             "name": "Desserts",
@@ -107,10 +107,10 @@
       {
         "product": {
           "id": 4,
-          "name": "Bánh quy hộp thiếc",
+          "name": "Tên miền .com",
           "price": 150000,
           "originalPrice": 300000,
-          "image": "https://zalo-miniapp.github.io/zaui-market/dummy/product/danisa.png",
+          "image": "https://www.pavietnam.vn/images/dangky/icon_com.svg",
           "category": {
             "id": 1,
             "name": "Snacks",
@@ -126,14 +126,14 @@
       "id": 1,
       "name": "Station 1",
       "image": "https://zalo-miniapp.github.io/zaui-market/dummy/station/station1.png",
-      "address": "456 Another St, City, Country",
+      "address": "435 Trường Chinh, Đống Đa, Hà Nội",
       "location": {
         "lat": 10.762622,
         "lng": 106.660172
       }
     },
     "total": 982900,
-    "note": "Lựa giúp mình táo ngon nhé, mình cảm ơn shop"
+    "note": "Dịch vụ thật tuyệt vời cảm ơn shop, mình cảm ơn shop"
   },
   {
     "id": 3,
@@ -145,10 +145,10 @@
       {
         "product": {
           "id": 4,
-          "name": "Bánh quy hộp thiếc",
+          "name": "Tên miền .com",
           "price": 150000,
           "originalPrice": 300000,
-          "image": "https://zalo-miniapp.github.io/zaui-market/dummy/product/danisa.png",
+          "image": "https://www.pavietnam.vn/images/dangky/icon_com.svg",
           "category": {
             "id": 1,
             "name": "Snacks",
@@ -161,10 +161,10 @@
       {
         "product": {
           "id": 5,
-          "name": "Bội nồi 4 món",
+          "name": "Hosting SSD Basic",
           "price": 150000,
           "originalPrice": 300000,
-          "image": "https://zalo-miniapp.github.io/zaui-market/dummy/product/pans.png",
+          "image": "https://static.vinahost.vn/wp-content/uploads/2023/10/ssd-hosting.jpg",
           "category": {
             "id": 1,
             "name": "Kitchenware",
@@ -177,10 +177,10 @@
       {
         "product": {
           "id": 6,
-          "name": "Bột giặt có nước xả",
+          "name": "n8n Host Basic",
           "price": 150000,
           "originalPrice": 300000,
-          "image": "https://zalo-miniapp.github.io/zaui-market/dummy/product/tide.png",
+          "image": "https://framerusercontent.com/images/REewxdOaqSzL8PhMNSCacPxkM.webp",
           "category": {
             "id": 1,
             "name": "Household",
@@ -211,26 +211,26 @@
       {
         "product": {
           "id": 5,
-          "name": "Bội nồi 4 món",
+          "name": "Cloud VPS 4GB RAM",
           "price": 150000,
           "originalPrice": 300000,
-          "image": "https://zalo-miniapp.github.io/zaui-market/dummy/product/pans.png",
+          "image": "https://5.imimg.com/data5/SELLER/Default/2023/3/KO/NM/ND/10261890/cloud-vps-16-gb-ram-500x500.jpg",
           "category": {
             "id": 1,
             "name": "Kitchenware",
             "image": "https://zalo-miniapp.github.io/zaui-market/dummy/category/kitchenware.png"
           },
-          "detail": "Bội nồi 4 món, tiện lợi và bền bỉ."
+          "detail": "VPS 2–4 vCPU, 4GB RAM, băng thông cao – thích hợp web traffic vừa, API nội bộ."
         },
         "quantity": 1
       },
       {
         "product": {
           "id": 6,
-          "name": "Bột giặt có nước xả",
+          "name": "Tên miền .info",
           "price": 150000,
           "originalPrice": 300000,
-          "image": "https://zalo-miniapp.github.io/zaui-market/dummy/product/tide.png",
+          "image": "https://www.pavietnam.vn/images/dangky/icon_info.svg",
           "category": {
             "id": 1,
             "name": "Household",
@@ -243,10 +243,10 @@
       {
         "product": {
           "id": 7,
-          "name": "Nồi cơm điện xanh dương",
+          "name": "Hosting SSD Pro",
           "price": 150000,
           "originalPrice": 300000,
-          "image": "https://zalo-miniapp.github.io/zaui-market/dummy/product/sunhouse.png",
+          "image": "https://xdomainhost.com/b1b148c2565-Pro.webp",
           "category": {
             "id": 1,
             "name": "Electronics",
