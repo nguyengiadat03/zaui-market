@@ -1,9 +1,9 @@
 [
   {
     "id": 1,
-    "name": "Tiệm Tí Hon - Chi nhánh 1",
-    "image": "https://zalo-miniapp.github.io/zaui-market/dummy/product/apples.png",
-    "address": "Z06, Số 13, Tân Thuận Đông, Quận 7, Thành phố Hồ Chí Minh, Việt Nam",
+    "name": "Rocket Shop - Cơ Sở 1",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSLGZzZAvPEogjVQv67X3U6PpiaAO6NuwUWQ&s",
+    "address": "Tầng 5, Tòa nhà BMC, Số 379 Minh Khai, Hai Bà Trưng, Hà Nội",
     "location": {
       "lat": 10.768746,
       "lng": 106.728228
@@ -11,12 +11,12 @@
   },
   {
     "id": 2,
-    "name": "Tiệm Tí Hon - Chi nhánh 2",
-    "image": "https://zalo-miniapp.github.io/zaui-market/dummy/product/apples.png",
-    "address": "Z06, Số 13, Tân Thuận Đông, Quận 7, Thành phố Hồ Chí Minh, Việt Nam",
+    "name": "Rocket Shop - Cơ Sở 2",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSLGZzZAvPEogjVQv67X3U6PpiaAO6NuwUWQ&s",
+    "address": "Tầng 5, Tòa nhà BMC, Số 379 Minh Khai, Hai Bà Trưng, Hà Nội",
     "location": {
-      "lat": 10.768746,
-      "lng": 106.728228
+       "lat": 10.858746,
+    "lng": 106.818228
     }
   }
 ]
