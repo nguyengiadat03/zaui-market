@@ -43,14 +43,14 @@ export default function ProductDetailPage() {
             <div className="text-2xl font-bold text-primary">
               {formatPrice(product.price)}
             </div>
+            <div className="text-lg font-medium text-foreground">
+              {product.name}
+            </div>
             {product.originalPrice && (
               <div className="text-sm text-subtitle line-through">
                 {formatPrice(product.originalPrice)}
               </div>
             )}
-            <div className="text-lg font-medium text-foreground">
-              {product.name}
-            </div>
           </div>
           <ShareButton product={product} />
         </div>

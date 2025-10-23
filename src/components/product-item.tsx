@@ -62,14 +62,14 @@ export default function ProductItem(props: ProductItemProps) {
                   {props.product.name}
                 </div>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex flex-col space-y-1">
                 <div className="text-lg font-bold text-primary">
                   {formatPrice(props.product.price)}
                 </div>
                 {props.product.originalPrice && (
-                  <span className="text-sm text-subtitle line-through">
+                  <div className="text-sm text-subtitle line-through">
                     {formatPrice(props.product.originalPrice)}
-                  </span>
+                  </div>
                 )}
               </div>
             </div>
