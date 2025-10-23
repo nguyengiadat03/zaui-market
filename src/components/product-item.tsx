@@ -21,7 +21,7 @@ export default function ProductItem(props: ProductItemProps) {
 
   return (
     <div
-      className="flex flex-col cursor-pointer group card hover:shadow-lg transition-all duration-300"
+      className="flex flex-col cursor-pointer group card hover:shadow-lg transition-all duration-300 w-full"
       onClick={() => setSelected(true)}
     >
       <TransitionLink
@@ -34,7 +34,7 @@ export default function ProductItem(props: ProductItemProps) {
             <div className="relative overflow-hidden rounded-xl mb-3">
               <img
                 src={props.product.image}
-                className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300"
+                className="w-full h-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300"
                 style={{
                   viewTransitionName:
                     isTransitioning && selected

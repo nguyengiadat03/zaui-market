@@ -15,7 +15,7 @@ export default function ProductGrid({
 }: ProductGridProps) {
   return (
     <div
-      className={"grid grid-cols-2 px-4 pt-4 pb-8 gap-4 ".concat(
+      className={"grid grid-cols-2 px-4 pt-4 pb-8 gap-4 place-items-center sm:grid-cols-3 md:grid-cols-4 ".concat(
         className ?? ""
       )}
       {...props}

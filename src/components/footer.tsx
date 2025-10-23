@@ -13,11 +13,6 @@ const NAV_ITEMS = [
     icon: HomeIcon,
   },
   {
-    name: "Danh mục",
-    path: "/categories",
-    icon: CategoryIcon,
-  },
-  {
     name: "Đơn hàng",
     path: "/orders",
     icon: PackageIcon,
@@ -35,6 +30,11 @@ const NAV_ITEMS = [
       );
     },
   },
+  {
+    name: "Danh mục",
+    path: "/categories",
+    icon: CategoryIcon,
+  },
 ];
 
 export default function Footer() {
@@ -46,7 +46,7 @@ export default function Footer() {
         <HorizontalDivider />
         <div className="w-full bg-section border-t border-border">
           <div
-            className="w-full px-4 pt-3 grid pb-sb"
+            className="w-full px-4 pt-2 grid pb-2"
             style={{
               gridTemplateColumns: `repeat(${NAV_ITEMS.length}, 1fr)`,
             }}

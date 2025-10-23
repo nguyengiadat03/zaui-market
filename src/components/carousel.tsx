@@ -76,6 +76,8 @@ export default function Carousel(props: CarouselProps) {
         {scrollSnaps.map((_, index) => (
           <button
             key={index}
+            type="button"
+            aria-label={`Go to slide ${index + 1}`}
             onClick={() => onDotButtonClick(index)}
             className={`rounded-full w-2 h-2 transition-all duration-200 ${
               index === selectedIndex && !props.disabled

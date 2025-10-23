@@ -1,5 +1,6 @@
 :not(input):not(textarea) {
   -webkit-user-select: none;
+  -moz-user-select: none;
   user-select: none;
 }
 
@@ -46,6 +47,8 @@
 }
 
 .zaui-tabs-tabbar {
+  display: -ms-grid;
+  -ms-grid-columns: 1fr 1fr 1fr;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   text-align: center;

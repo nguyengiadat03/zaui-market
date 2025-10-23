@@ -9,7 +9,7 @@ import FloatingCartPreview from "./floating-cart-preview";
 
 export default function Layout() {
   return (
-    <div className="w-screen h-screen flex flex-col bg-background text-foreground">
+    <div className="w-screen h-screen flex flex-col bg-background text-foreground max-w-md mx-auto">
       <Header />
       <div className="flex-1 overflow-y-auto">
         <Suspense fallback={<PageSkeleton />}>

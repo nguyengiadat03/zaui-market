@@ -40,6 +40,7 @@ export default function Header() {
           <>
             <img
               src={getConfig((c) => c.template.logoUrl)}
+              alt={`${getConfig((c) => c.template.shopName)} logo`}
               className="flex-none w-10 h-10 rounded-xl shadow-md"
             />
             <TransitionLink to="/stations" className="flex-1 overflow-hidden">
@@ -88,6 +89,7 @@ export default function Header() {
               <img
                 className="w-8 h-8 rounded-full ring-2 ring-white/20"
                 src={userInfo.data.avatar}
+                alt="User avatar"
               />
             ) : (
               <DefaultUserAvatar
