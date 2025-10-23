@@ -64,21 +64,23 @@ export default function Carousel(props: CarouselProps) {
 
   return (
     <div className="overflow-hidden" ref={emblaRef}>
-      <div className="flex space-x-2 mt-2 mx-4">
+      <div className="flex space-x-4 mt-4 mx-4">
         {props.slides.map((slide, i) => (
-          <div key={i} className="flex-none basis-full">
+          <div key={i} className="flex-none basis-full pl-2 first:pl-0">
             {slide}
           </div>
         ))}
       </div>
 
-      <div className="py-2 flex justify-center items-center space-x-2">
+      <div className="py-4 flex justify-center items-center space-x-2">
         {scrollSnaps.map((_, index) => (
           <button
             key={index}
             onClick={() => onDotButtonClick(index)}
-            className={`rounded-full w-1 h-1 bg-black/10 ${
-              index === selectedIndex && !props.disabled ? "bg-primary" : ""
+            className={`rounded-full w-2 h-2 transition-all duration-200 ${
+              index === selectedIndex && !props.disabled
+                ? "bg-primary scale-125"
+                : "bg-subtitle/30 hover:bg-subtitle/50"
             }`}
           />
         ))}

@@ -34,27 +34,25 @@ export default function Header() {
   const showBack = location.key !== "default" && !handle?.noBack;
 
   return (
-    <div
-      className="w-full flex flex-col px-4 bg-primary text-primaryForeground pt-st overflow-hidden bg-no-repeat bg-right-top"
-      style={{
-        backgroundImage: `url(${headerIllus})`,
-      }}
-    >
-      <div className="w-full min-h-12 pr-[90px] flex py-2 space-x-2 items-center">
+    <div className="w-full flex flex-col px-4 bg-gradient-to-r from-primary to-blue-600 text-primaryForeground pt-st overflow-hidden shadow-lg">
+      <div className="w-full min-h-14 pr-[90px] flex py-3 space-x-3 items-center">
         {handle?.logo ? (
           <>
             <img
               src={getConfig((c) => c.template.logoUrl)}
-              className="flex-none w-8 h-8 rounded-full"
+              className="flex-none w-10 h-10 rounded-xl shadow-md"
             />
             <TransitionLink to="/stations" className="flex-1 overflow-hidden">
-              <div className="flex items-center space-x-1">
-                <h1 className="text-lg font-bold">
+              <div className="flex items-center space-x-2">
+                <h1 className="text-xl font-bold tracking-tight">
                   {getConfig((c) => c.template.shopName)}
                 </h1>
-                <Icon icon="zi-chevron-right" />
+                <Icon
+                  icon="zi-chevron-right"
+                  className="text-primaryForeground/80"
+                />
               </div>
-              <p className="overflow-x-auto whitespace-nowrap text-2xs">
+              <p className="overflow-x-auto whitespace-nowrap text-xs opacity-90">
                 {getConfig((c) => c.template.shopAddress)}
               </p>
             </TransitionLink>
@@ -63,18 +61,18 @@ export default function Header() {
           <>
             {showBack && (
               <div
-                className="py-1 px-2 cursor-pointer"
+                className="p-2 cursor-pointer rounded-lg hover:bg-white/10 transition-colors"
                 onClick={() => navigate(-1)}
               >
                 <Icon icon="zi-arrow-left" />
               </div>
             )}
-            <div className="text-xl font-medium truncate">{title}</div>
+            <div className="text-xl font-semibold truncate">{title}</div>
           </>
         )}
       </div>
       {handle?.search && (
-        <div className="w-full py-2 flex space-x-2">
+        <div className="w-full py-3 flex space-x-3">
           <SearchBar
             onFocus={() => {
               if (location.pathname !== "/search") {
@@ -82,10 +80,13 @@ export default function Header() {
               }
             }}
           />
-          <TransitionLink to="/profile">
+          <TransitionLink
+            to="/profile"
+            className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+          >
             {userInfo.state === "hasData" && userInfo.data ? (
               <img
-                className="w-8 h-8 rounded-full"
+                className="w-8 h-8 rounded-full ring-2 ring-white/20"
                 src={userInfo.data.avatar}
               />
             ) : (

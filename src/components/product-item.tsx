@@ -21,63 +21,67 @@ export default function ProductItem(props: ProductItemProps) {
 
   return (
     <div
-      className="flex flex-col cursor-pointer group bg-section rounded-xl shadow-[0_10px_24px_#0D0D0D17]"
+      className="flex flex-col cursor-pointer group card hover:shadow-lg transition-all duration-300"
       onClick={() => setSelected(true)}
     >
       <TransitionLink
         to={`/product/${props.product.id}`}
         replace={props.replace}
-        className="p-2 pb-0"
+        className="p-3 pb-0"
       >
         {({ isTransitioning }) => (
           <>
-            <img
-              src={props.product.image}
-              className="w-full max-w-[120px] aspect-square object-contain mx-auto rounded-lg"
-              style={{
-                viewTransitionName:
-                  isTransitioning && selected
-                    ? `product-image-${props.product.id}`
-                    : undefined,
-              }}
-              alt={props.product.name}
-            />
+            <div className="relative overflow-hidden rounded-xl mb-3">
+              <img
+                src={props.product.image}
+                className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300"
+                style={{
+                  viewTransitionName:
+                    isTransitioning && selected
+                      ? `product-image-${props.product.id}`
+                      : undefined,
+                }}
+                alt={props.product.name}
+              />
+              {props.product.originalPrice && (
+                <div className="absolute top-2 right-2 bg-danger text-white text-xs px-2 py-1 rounded-full font-semibold">
+                  -
+                  {100 -
+                    Math.round(
+                      (props.product.price * 100) / props.product.originalPrice
+                    )}
+                  %
+                </div>
+              )}
+            </div>
 
-            <div className="pt-2 pb-1.5">
-              <div className="pt-1 pb-0.5">
-                <div className="text-xs h-9 line-clamp-2">
+            <div className="space-y-2">
+              <div className="min-h-[2.5rem]">
+                <div className="text-sm font-medium text-foreground line-clamp-2 leading-tight">
                   {props.product.name}
                 </div>
               </div>
-              <div className="mt-0.5 text-sm font-bold text-primary truncate">
-                {formatPrice(props.product.price)}
-              </div>
-              {props.product.originalPrice && (
-                <div className="text-3xs space-x-0.5 truncate">
-                  <span className="text-subtitle line-through">
+              <div className="flex items-center space-x-2">
+                <div className="text-lg font-bold text-primary">
+                  {formatPrice(props.product.price)}
+                </div>
+                {props.product.originalPrice && (
+                  <span className="text-sm text-subtitle line-through">
                     {formatPrice(props.product.originalPrice)}
                   </span>
-                  <span className="text-danger">
-                    -
-                    {100 -
-                      Math.round(
-                        (props.product.price * 100) /
-                          props.product.originalPrice
-                      )}
-                    %
-                  </span>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </>
         )}
       </TransitionLink>
-      <div className="p-2">
+      <div className="p-3 pt-2">
         {cartQuantity === 0 ? (
           <Button
             variant="secondary"
             size="small"
             fullWidth
+            className="rounded-lg font-semibold"
             onClick={(e) => {
               e.stopPropagation();
               addToCart(1, {

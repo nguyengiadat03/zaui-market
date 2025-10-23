@@ -12,8 +12,8 @@ export default function Section(props: PropsWithChildren<SectionProps>) {
       className={"bg-section ".concat(props.className ?? "")}
       onClick={props.onClick}
     >
-      <div className="flex items-center justify-between px-2">
-        <div className="text-sm font-medium truncate p-2 pt-3 w-full">
+      <div className="flex items-center justify-between px-4">
+        <div className="text-lg font-semibold text-foreground py-4 w-full">
           {props.title}
         </div>
       </div>

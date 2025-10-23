@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  purge: {
-    enabled: true,
-    content: ["./src/**/*.{js,jsx,ts,tsx,vue}"],
-  },
+  content: ["./src/**/*.{js,jsx,ts,tsx,vue}"],
   theme: {
     extend: {
       colors: {
@@ -17,6 +14,9 @@ module.exports = {
         subtitle: "var(--subtitle)",
         danger: "var(--danger)",
         skeleton: "var(--skeleton)",
+        success: "var(--success)",
+        warning: "var(--warning)",
+        border: "var(--border)",
       },
       spacing: {
         st: "var(--safe-top)",

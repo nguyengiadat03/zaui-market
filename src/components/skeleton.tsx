@@ -56,20 +56,18 @@ export function PageSkeleton() {
 
 export function ProductItemSkeleton() {
   return (
-    <div className="flex flex-col cursor-progress group bg-section rounded-xl p-2 shadow-[0_10px_24px_#0D0D0D17]">
-      <div className="w-full aspect-square bg-skeleton animate-pulse rounded-lg" />
-      <div className="pt-2 pb-3">
-        <div className="text-xs pt-1 pb-0.5 bg-skeleton animate-pulse rounded-lg inline-block text-transparent">
-          Lorem ipsum dolor sit
-        </div>
-        <div className="mt-0.5 text-sm font-bold bg-skeleton animate-pulse rounded-lg inline-block text-transparent">
-          Lorem ipsum dolor sit
-        </div>
-        <div className="text-3xs space-x-0.5 bg-skeleton animate-pulse rounded-lg inline-block text-transparent">
-          Lorem ipsum dolor sit
+    <div className="flex flex-col cursor-progress group card">
+      <div className="p-3 pb-0">
+        <div className="w-full aspect-square bg-skeleton animate-pulse rounded-xl" />
+        <div className="pt-3 space-y-2">
+          <div className="h-4 bg-skeleton animate-pulse rounded-lg" />
+          <div className="h-5 bg-skeleton animate-pulse rounded-lg w-3/4" />
+          <div className="h-3 bg-skeleton animate-pulse rounded-lg w-1/2" />
         </div>
       </div>
-      <Button variant="secondary" size="small"></Button>
+      <div className="p-3 pt-2">
+        <div className="h-8 bg-skeleton animate-pulse rounded-lg" />
+      </div>
     </div>
   );
 }

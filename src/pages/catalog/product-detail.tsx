@@ -19,57 +19,62 @@ export default function ProductDetailPage() {
   return (
     <div className="w-full h-full flex flex-col">
       <div className="flex-1 overflow-y-auto">
-        <div className="w-full p-4 pb-2 space-y-4 bg-section">
-          <img
-            key={product.id}
-            src={product.image}
-            alt={product.name}
-            className="w-full h-full object-cover rounded-lg"
-            style={{
-              viewTransitionName: `product-image-${product.id}`,
-            }}
-          />
-          <div>
-            <div className="text-xl font-bold text-primary">
+        <div className="w-full p-4 pb-2 space-y-4 bg-section fade-in-up">
+          <div className="relative overflow-hidden rounded-2xl shadow-lg">
+            <img
+              key={product.id}
+              src={product.image}
+              alt={product.name}
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              style={{
+                viewTransitionName: `product-image-${product.id}`,
+              }}
+            />
+            {product.originalPrice && (
+              <div className="absolute top-3 right-3 bg-danger text-white text-xs px-3 py-1 rounded-full font-semibold shadow-lg">
+                -
+                {100 -
+                  Math.round((product.price * 100) / product.originalPrice)}
+                %
+              </div>
+            )}
+          </div>
+          <div className="space-y-3">
+            <div className="text-2xl font-bold text-primary">
               {formatPrice(product.price)}
             </div>
             {product.originalPrice && (
-              <div className="text-2xs space-x-0.5">
-                <span className="text-subtitle line-through">
-                  {formatPrice(product.originalPrice)}
-                </span>
-                <span className="text-danger">
-                  -
-                  {100 -
-                    Math.round((product.price * 100) / product.originalPrice)}
-                  %
-                </span>
+              <div className="text-sm text-subtitle line-through">
+                {formatPrice(product.originalPrice)}
               </div>
             )}
-            <div className="text-sm mt-1">{product.name}</div>
+            <div className="text-lg font-medium text-foreground">
+              {product.name}
+            </div>
           </div>
           <ShareButton product={product} />
         </div>
         {product.detail && (
           <>
             <div className="bg-background h-2 w-full"></div>
-            <Section title="Mô tả sản phẩm">
-              <div className="text-sm whitespace-pre-wrap text-subtitle p-4 pt-2">
+            <Section title="Mô tả sản phẩm" className="fade-in-up">
+              <div className="text-sm whitespace-pre-wrap text-subtitle p-4 pt-2 leading-relaxed">
                 {product.detail}
               </div>
             </Section>
           </>
         )}
         <div className="bg-background h-2 w-full"></div>
-        <Section title="Sản phẩm khác">
+        <Section title="Sản phẩm khác" className="fade-in-up">
           <RelatedProducts currentProductId={product.id} />
         </Section>
       </div>
 
       <HorizontalDivider />
-      <div className="flex-none grid grid-cols-2 gap-2 py-3 px-4 bg-section">
+      <div className="flex-none grid grid-cols-2 gap-3 py-4 px-4 bg-section">
         <Button
           variant="tertiary"
+          className="rounded-xl font-semibold hover-lift"
           onClick={() => {
             addToCart(1, {
               toast: true,
@@ -79,6 +84,7 @@ export default function ProductDetailPage() {
           Thêm vào giỏ
         </Button>
         <Button
+          className="rounded-xl font-semibold hover-lift"
           onClick={() => {
             addToCart(1);
             navigate("/cart", {

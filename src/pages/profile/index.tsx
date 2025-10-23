@@ -5,7 +5,7 @@ import UserInfo from "./user-info";
 
 export default function ProfilePage() {
   return (
-    <div className="min-h-full bg-background p-4 space-y-2.5">
+    <div className="min-h-full bg-background p-4 space-y-4">
       <UserInfo>
         <Points />
       </UserInfo>
