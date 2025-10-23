@@ -1,6 +1,6 @@
 import { Button } from "zmp-ui";
 import { MinusIcon, PlusIcon } from "./vectors";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export interface QuantityInputProps {
   value: number;
@@ -10,10 +10,19 @@ export interface QuantityInputProps {
 
 export default function QuantityInput(props: QuantityInputProps) {
   const [localValue, setLocalValue] = useState(String(props.value));
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setLocalValue(String(props.value));
   }, [props.value]);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.style.width = `calc(${
+        String(localValue).length
+      }ch + 16px)`;
+    }
+  }, [localValue]);
 
   return (
     <div className="w-full flex items-center">
@@ -28,7 +37,7 @@ export default function QuantityInput(props: QuantityInputProps) {
         <MinusIcon width={14} height={14} />
       </Button>
       <input
-        style={{ width: `calc(${String(props.value).length}ch + 16px)` }}
+        ref={inputRef}
         className="flex-1 text-center font-medium text-xs px-2 focus:outline-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         type="number"
         inputMode="numeric"
@@ -37,6 +46,7 @@ export default function QuantityInput(props: QuantityInputProps) {
         onBlur={() =>
           props.onChange(Math.max(props.minValue ?? 0, Number(localValue)))
         }
+        aria-label="Quantity"
       />
       <Button
         size="small"

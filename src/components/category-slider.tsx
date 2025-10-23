@@ -21,6 +21,7 @@ export default function CategorySlider() {
         >
           <img
             src={category.image}
+            alt={category.name}
             className="w-6 h-6 rounded-full bg-skeleton"
           />
           <p className="text-xs whitespace-nowrap">{category.name}</p>
