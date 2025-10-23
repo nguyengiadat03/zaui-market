@@ -118,10 +118,10 @@ export function useCheckout() {
   const navigate = useNavigate();
   const refreshNewOrders = useSetAtom(ordersState("pending"));
 
-  return async () => {
+  return async (paymentMethod?: string) => {
     try {
       await requestInfo();
-      await createOrder({
+      const paymentOptions: any = {
         amount: totalAmount,
         desc: "Thanh toán đơn hàng",
         item: cart.map((item) => ({
@@ -130,7 +130,17 @@ export function useCheckout() {
           price: item.product.price,
           quantity: item.quantity,
         })),
-      });
+      };
+
+      if (paymentMethod === "bank") {
+        paymentOptions.method = "BANK";
+      } else if (paymentMethod === "card") {
+        paymentOptions.method = "CARD";
+      } else if (paymentMethod === "qr") {
+        paymentOptions.method = "QR";
+      }
+
+      await createOrder(paymentOptions);
       setCart([]);
       refreshNewOrders();
       navigate("/orders", {

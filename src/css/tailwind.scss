@@ -35,3 +35,38 @@
     var(--zaui-safe-area-inset-bottom, env(safe-area-inset-bottom, 30px))
   );
 }
+
+/* Smooth scrolling and performance optimizations */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Optimize animations for mobile */
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    will-change: transform, box-shadow;
+    transform: translateZ(0);
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* Improve scrolling performance */
+.overflow-y-auto {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Optimize image loading */
+img {
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}

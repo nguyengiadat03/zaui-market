@@ -21,7 +21,7 @@ export default function ProductItem(props: ProductItemProps) {
 
   return (
     <div
-      className="flex flex-col cursor-pointer group card hover:shadow-lg transition-all duration-300 w-full"
+      className="flex flex-col cursor-pointer group card hover:shadow-lg transition-all duration-300 w-full h-full transform-gpu"
       onClick={() => setSelected(true)}
     >
       <TransitionLink
@@ -34,7 +34,7 @@ export default function ProductItem(props: ProductItemProps) {
             <div className="relative overflow-hidden rounded-xl mb-3">
               <img
                 src={props.product.image}
-                className="w-full h-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300"
+                className="w-30 h-30 aspect-square object-cover group-hover:scale-105 transition-transform duration-300 will-change-transform"
                 style={{
                   viewTransitionName:
                     isTransitioning && selected
@@ -42,6 +42,7 @@ export default function ProductItem(props: ProductItemProps) {
                       : undefined,
                 }}
                 alt={props.product.name}
+                loading="lazy"
               />
               {props.product.originalPrice && (
                 <div className="absolute top-2 right-2 bg-danger text-white text-xs px-2 py-1 rounded-full font-semibold">
@@ -55,7 +56,7 @@ export default function ProductItem(props: ProductItemProps) {
               )}
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 flex-1 flex flex-col justify-between">
               <div className="min-h-[2.5rem]">
                 <div className="text-sm font-medium text-foreground line-clamp-2 leading-tight">
                   {props.product.name}
