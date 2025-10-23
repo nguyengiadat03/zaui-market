@@ -133,7 +133,8 @@ export function useCheckout() {
       };
 
       if (paymentMethod === "bank") {
-        paymentOptions.method = "BANK";
+        // For bank payment, throw error to trigger development message
+        throw new Error("Bank payment API not implemented yet");
       } else if (paymentMethod === "card") {
         paymentOptions.method = "CARD";
       } else if (paymentMethod === "qr") {
@@ -152,9 +153,7 @@ export function useCheckout() {
       });
     } catch (error) {
       console.warn(error);
-      toast.error(
-        "Thanh toán thất bại. Vui lòng kiểm tra nội dung lỗi bên trong Console."
-      );
+      throw error; // Re-throw to let the component handle it
     }
   };
 }
