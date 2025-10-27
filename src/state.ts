@@ -18,7 +18,7 @@ import {
   Station,
   UserInfo,
 } from "@/types";
-import { requestWithFallback } from "@/utils/request";
+import { request, requestWithFallback } from "@/utils/request"; // Thêm request
 import {
   getLocation,
   getPhoneNumber,
@@ -35,33 +35,20 @@ export const userInfoKeyState = atom(0);
 export const userInfoState = atom<Promise<UserInfo>>(async (get) => {
   get(userInfoKeyState);
 
-  // Nếu người dùng đã chỉnh sửa thông tin tài khoản trước đó, sử dụng thông tin đã lưu trữ
-  const savedUserInfo = localStorage.getItem(CONFIG.STORAGE_KEYS.USER_INFO);
-  // Phía tích hợp có thể thay đổi logic này thành fetch từ server
-  // const savedUserInfo = await fetchUserInfo({ token: await getAccessToken() });
-  if (savedUserInfo) {
-    return JSON.parse(savedUserInfo);
-  }
-
-  const {
-    authSetting: {
-      "scope.userInfo": grantedUserInfo,
-      "scope.userPhonenumber": grantedPhoneNumber,
-    },
-  } = await getSetting({});
-  const isDev = !window.ZJSBridge;
-  if (grantedUserInfo || isDev) {
-    // Người dùng cho phép truy cập tên và ảnh đại diện
+  // *** Cải tiến: Fetch thông tin người dùng từ Backend API ***
+  try {
+    // Backend sẽ xác thực token Zalo và trả về thông tin người dùng
+    const serverUserInfo = await request<UserInfo>("/user/profile");
+    return serverUserInfo;
+  } catch (e) {
+    console.error("Failed to fetch user info from backend:", e);
+    // Nếu thất bại, fallback về thông tin cơ bản từ Zalo SDK
     const { userInfo } = await getUserInfo({});
-    const phone =
-      grantedPhoneNumber || isDev // Người dùng cho phép truy cập số điện thoại
-        ? await get(phoneState)
-        : "";
     return {
       id: userInfo.id,
       name: userInfo.name,
       avatar: userInfo.avatar,
-      phone,
+      phone: "", // Sẽ được cập nhật sau khi gọi phoneState
       email: "",
       address: "",
     };
@@ -77,17 +64,13 @@ export const phoneState = atom(async () => {
     // Phía tích hợp làm theo hướng dẫn tại https://mini.zalo.me/documents/api/getPhoneNumber/ để chuyển đổi token thành số điện thoại người dùng ở server.
     // phone = await decodeToken(token);
 
-    // Các bước bên dưới để demo chức năng, phía tích hợp có thể bỏ đi sau.
-    // toast(
-    //   "Đã lấy được token chứa số điện thoại người dùng. Phía tích hợp cần decode token này ở server. Giả lập số điện thoại 0912345678...",
-    //   {
-    //     icon: "ℹ",
-    //     duration: 10000,
-    //   }
-    // );
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    phone = "0912345678";
-    // End demo
+      // *** Cải tiến: Bỏ logic demo, sử dụng token để decode số điện thoại ở Server ***
+    // Phía tích hợp làm theo hướng dẫn tại https://mini.zalo.me/documents/api/getPhoneNumber/ để chuyển đổi token thành số điện thoại người dùng ở server.
+    // Ví dụ: const { phone: decodedPhone } = await api.post("/auth/decode-phone", { token });
+    // phone = decodedPhone;
+    
+    // Giả lập số điện thoại sau khi decode thành công ở server (chỉ để demo)
+    phone = "0912345678"; 
   } catch (error) {
     console.warn(error);
   }
@@ -113,6 +96,7 @@ export const categoriesStateUpwrapped = unwrap(
 
 export const productsState = atom(async (get) => {
   const categories = await get(categoriesState);
+  // *** Cải tiến: Gọi API thật ***
   const products = await requestWithFallback<
     (Product & { categoryId: number })[]
   >("/products", []);
@@ -176,20 +160,16 @@ export const stationsState = atom(async () => {
     // Phía tích hợp làm theo hướng dẫn tại https://mini.zalo.me/documents/api/getLocation/ để chuyển đổi token thành thông tin vị trí người dùng ở server.
     // location = await decodeToken(token);
 
-    // Các bước bên dưới để demo chức năng, phía tích hợp có thể bỏ đi sau.
-    // toast(
-    //   "Đã lấy được token chứa thông tin vị trí người dùng. Phía tích hợp cần decode token này ở server. Giả lập vị trí tại VNG Campus...",
-    //   {
-    //     icon: "ℹ",
-    //     duration: 10000,
-    //   }
-    // );
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+      // *** Cải tiến: Bỏ logic demo, sử dụng token để decode vị trí ở Server ***
+    // Phía tích hợp làm theo hướng dẫn tại https://mini.zalo.me/documents/api/getLocation/ để chuyển đổi token thành thông tin vị trí người dùng ở server.
+    // Ví dụ: const { lat, lng } = await api.post("/auth/decode-location", { token });
+    // location = { lat, lng };
+    
+    // Giả lập vị trí sau khi decode thành công ở server (chỉ để demo)
     location = {
       lat: 10.773756,
       lng: 106.689247,
     };
-    // End demo
   } catch (error) {
     console.warn(error);
   }
@@ -228,11 +208,12 @@ export const ordersState = atomFamily((status: OrderStatus) =>
   atomWithRefresh(async () => {
     // Phía tích hợp thay đổi logic filter server-side nếu cần:
     // const serverSideFilteredData = await requestWithFallback<Order[]>(`/orders?status=${status}`, []);
-    const allMockOrders = await requestWithFallback<Order[]>("/orders", []);
-    const clientSideFilteredData = allMockOrders.filter(
-      (order) => order.status === status
+    // *** Cải tiến: Lọc đơn hàng theo status ngay tại Backend ***
+    const serverSideFilteredData = await requestWithFallback<Order[]>(
+      `/orders?status=${status}`,
+      []
     );
-    return clientSideFilteredData;
+    return serverSideFilteredData;
   })
 );
 

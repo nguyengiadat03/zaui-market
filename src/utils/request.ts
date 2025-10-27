@@ -1,27 +1,56 @@
-import { getConfig } from "./template";
+import axios, { AxiosInstance } from "axios";
+import { getAccessToken } from "zmp-sdk";
 
-const API_URL = getConfig((config) => config.template.apiUrl);
+// Lấy VITE_API_URL từ biến môi trường
+const API_URL = import.meta.env.VITE_API_URL;
 
-const mockUrls = import.meta.glob<{ default: string }>("../mock/*.json", {
-  query: "url",
-  eager: true,
-});
-
-export async function request<T>(
-  path: string,
-  options?: RequestInit
-): Promise<T> {
-  const url = API_URL
-    ? `${API_URL}${path}`
-    : mockUrls[`../mock${path}.json`]?.default;
-
-  if (!API_URL) {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-  }
-  const response = await fetch(url, options);
-  return response.json() as T;
+if (!API_URL) {
+  console.error("VITE_API_URL is not defined in .env file. API calls will fail.");
 }
 
+// 1. Khởi tạo Axios Instance
+export const api: AxiosInstance = axios.create({
+  baseURL: API_URL,
+  timeout: 10000,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+// 2. Interceptor cho Request: Thêm Authorization Header
+api.interceptors.request.use(async (config) => {
+  try {
+    // Lấy Zalo Access Token. Token này được Zalo Mini App cấp
+    const { token } = await getAccessToken({});
+    
+    // Gửi token này lên Backend để Backend xác thực với Zalo Server
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  } catch (error) {
+    console.error("Error getting Zalo Access Token:", error);
+  }
+  return config;
+});
+
+// 3. Các hàm request tiện ích (Tương thích với logic cũ)
+
+// Hàm request chính (dùng cho GET)
+export async function request<T>(path: string): Promise<T> {
+  const response = await api.get<T>(path);
+  return response.data;
+}
+
+// Hàm request với POST
+export async function requestWithPost<P, T>(
+  path: string,
+  payload: P
+): Promise<T> {
+  const response = await api.post<T>(path, payload);
+  return response.data;
+}
+
+// Hàm request có fallback (dùng cho các trường hợp không cần thiết phải có dữ liệu)
 export async function requestWithFallback<T>(
   path: string,
   fallbackValue: T
@@ -30,22 +59,10 @@ export async function requestWithFallback<T>(
     return await request<T>(path);
   } catch (error) {
     console.warn(
-      "An error occurred while fetching data. Falling back to default value!"
+      "An error occurred while fetching data. Falling back to default value!",
+      { path, error }
     );
-    console.warn({ path, error, fallbackValue });
     return fallbackValue;
   }
 }
 
-export async function requestWithPost<P, T>(
-  path: string,
-  payload: P
-): Promise<T> {
-  return await request<T>(path, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
-}

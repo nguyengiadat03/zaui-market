@@ -1,4 +1,4 @@
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";\nimport { api } from "./utils/request"; // Import api client
 import { MutableRefObject, useLayoutEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { UIMatch, useMatches, useNavigate } from "react-router-dom";
@@ -9,9 +9,9 @@ import {
   userInfoKeyState,
   userInfoState,
 } from "@/state";
-import { Product } from "@/types";
+import { OrderPayload, Product, ShippingAddress } from "@/types"; // Import OrderPayload, ShippingAddress
 import { getConfig } from "@/utils/template";
-import { authorize, createOrder, openChat } from "zmp-sdk/apis";
+import { authorize, openChat } from "zmp-sdk/apis"; // Bỏ createOrder
 import { useAtomCallback } from "jotai/utils";
 
 export function useRealHeight(
@@ -117,42 +117,64 @@ export function useCheckout() {
   const requestInfo = useRequestInformation();
   const navigate = useNavigate();
   const refreshNewOrders = useSetAtom(ordersState("pending"));
+  // Thêm các state cần thiết
+  const selectedStation = useAtomValue(selectedStationState);
+  const shippingAddress = useAtomValue(shippingAddressState);
 
-  return async (paymentMethod?: string) => {
+  return async (paymentMethod: "COD" | "ZALOPAY") => {
     try {
+      // 1. Yêu cầu thông tin người dùng (để đảm bảo có token Zalo)
       await requestInfo();
-      const paymentOptions: any = {
-        amount: totalAmount,
-        desc: "Thanh toán đơn hàng",
-        item: cart.map((item) => ({
-          id: item.product.id,
-          name: item.product.name,
-          price: item.product.price,
-          quantity: item.quantity,
-        })),
-      };
 
-      if (paymentMethod === "bank") {
-        // For bank payment, throw error to trigger development message
-        throw new Error("Bank payment API not implemented yet");
-      } else if (paymentMethod === "card") {
-        paymentOptions.method = "CARD";
-      } else if (paymentMethod === "qr") {
-        paymentOptions.method = "QR";
+      if (!shippingAddress) {
+        throw new Error("Vui lòng chọn địa chỉ nhận hàng.");
       }
 
-      await createOrder(paymentOptions);
+      // 2. Chuẩn bị payload cho Backend
+      const orderPayload: OrderPayload = {
+        items: cart.map((item) => ({
+          productId: item.product.id,
+          qty: item.quantity,
+          price: item.product.price,
+        })),
+        // Sử dụng địa chỉ từ ShippingAddress
+        address: \`\${shippingAddress.address}, \${shippingAddress.ward}, \${shippingAddress.district}, \${shippingAddress.city}\`,
+        stationId: selectedStation?.id || 0, // Dùng stationId nếu có
+        payment: paymentMethod,
+      };
+
+      // 3. Gửi đơn hàng lên Backend
+      const response = await api.post("/orders", orderPayload);
+
+      if (paymentMethod === "ZALOPAY") {
+        // *** Tích hợp ZaloPay: Cần gọi API ZaloPay từ Backend và trả về URL/token ***
+        // Ví dụ: const { zp_token } = await api.post("/zalopay/create-order", { orderId: response.data.orderId });
+        // Sau đó dùng Zalo SDK để mở ZaloPay:
+        // await createOrder({ zp_token });
+        
+        toast.error("Tích hợp ZaloPay chưa hoàn thành. Vui lòng chọn COD.", {
+          icon: "🛠️",
+          duration: 5000,
+        });
+        throw new Error("ZaloPay integration pending.");
+      }
+
+      // 4. Xử lý thành công (COD)
       setCart([]);
       refreshNewOrders();
       navigate("/orders", {
         viewTransition: true,
       });
-      toast.success("Thanh toán thành công. Cảm ơn bạn đã mua hàng!", {
+      toast.success("Đặt hàng thành công (COD). Đơn hàng đang chờ xử lý!", {
         icon: "🎉",
         duration: 5000,
       });
     } catch (error) {
-      console.warn(error);
+      console.warn("Checkout Error:", error);
+      toast.error("Đặt hàng thất bại. Vui lòng thử lại.", {
+        icon: "❌",
+        duration: 5000,
+      });
       throw error; // Re-throw to let the component handle it
     }
   };
